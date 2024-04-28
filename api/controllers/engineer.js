@@ -1,46 +1,36 @@
 const Engineer = require("../models/Engineer.js");
-const CryptoJS = require("crypto-js");
 
 const createEngineer = async (req, res) => {
   try {
-    const newEngineer = new Engineer(req.body);  // req.body'den alınan verilerle yeni bir kullanıcı nesnesi oluşturuluyor
-    const savedEngineer = await newEngineer.save();  // Oluşturulan kullanıcı veritabanına kaydediliyor
-    res.status(201).json(savedEngineer);  // Başarılı bir şekilde oluşturulan kullanıcı bilgisi ile birlikte 201 durum kodu dönülüyor
+    const newEngineer = new Engineer(req.body); 
+    const savedEngineer = await newEngineer.save();  
+    res.status(201).json(savedEngineer);  
   } catch (err) {
-    res.status(500).json(err);  // Bir hata oluşursa, hata ile birlikte 500 durum kodu dönülüyor
+    res.status(500).json(err); 
   }
 }
 
-
-const updateEngineer = async (req, res) => {
-
-  if (req.body.password) {
-
-    req.body.password = CryptoJS.AES.encrypt(
-      req.body.password,
-      process.env.PASS_SEC
-    ).toString();
-
-  }
-
+const updateEngineerByPhoneNumber = async (req, res) => {
   try {
-    const updatedEngineer = await Engineer.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
+    const updatedEngineer = await Engineer.findOneAndUpdate(
+      { phoneNumber: req.params.phoneNumber }, 
+      { $set: req.body },
       { new: true }
     );
 
-    res.status(200).json(updatedEngineer);
+    if (updatedEngineer) {
+      res.status(200).json(updatedEngineer);
+    } else {
+      res.status(404).json({ message: 'Engineer not found with this phone number.' });
+    }
   } catch (err) {
     res.status(500).json(err);
   }
 }
 
-const deleteEngineer = async (req, res) => {
+const deleteEngineerByPhoneNumber = async (req, res) => {
   try {
-    await Engineer.findByIdAndDelete(req.params.id);
+    await Engineer.findOneAndDelete({ phoneNumber: req.params.phoneNumber });
     res.status(200).json("Engineer has been deleted...");
   } catch (err) {
     res.status(500).json(err);
@@ -49,19 +39,28 @@ const deleteEngineer = async (req, res) => {
 
 const getEngineer = async (req, res) => {
   try {
-    const Engineer = await Engineer.findById(req.params.id);
-    const { password, ...others } = Engineer._doc;
-    res.status(200).json(others);
+    let result;
+    if(req.params.phoneNumber){
+      result = await Engineer.findOne({ phoneNumber: req.params.phoneNumber });
+    } else {
+      result = await Engineer.find({});
+    }
+
+    if (result) {
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ message: 'Engineer not found.' });
+    }
+
   } catch (err) {
     res.status(500).json(err);
   }
 }
 
-
 module.exports = {
     createEngineer,
-    updateEngineer,
-    deleteEngineer,
+    updateEngineerByPhoneNumber,
+    deleteEngineerByPhoneNumber,
     getEngineer
 
 }

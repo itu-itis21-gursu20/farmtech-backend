@@ -1,6 +1,7 @@
 const express = require("express");
 
 const {    
+    getAllLands,
     getLand,
     createLand,
     deleteLand,
@@ -10,9 +11,10 @@ const {
 const router = express.Router();
 
 router.post("/", createLand);
-router.put("/:id", updateLand);
-router.delete("/:id", deleteLand);
-router.get("/:number?", getLand);
+router.put("/:landId", updateLand);
+router.delete("/:landId", deleteLand);
+router.get("/:phoneNumber?", getAllLands);
+router.get("/find/:landId?", getLand);
 
 module.exports = router;
 

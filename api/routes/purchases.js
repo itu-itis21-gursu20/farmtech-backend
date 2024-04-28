@@ -2,6 +2,7 @@ const express = require("express");
 
 const {    
     getPurchase,
+    getAllPurchases,
     createPurchase,
     deletePurchase,
     updatePurchase,
@@ -12,7 +13,8 @@ const router = express.Router();
 router.post("/:landId?", createPurchase);
 router.put("/:id", updatePurchase);
 router.delete("/:id", deletePurchase);
-router.get("/:landId?", getPurchase); // get purchases by land id
+router.get("/:landId?", getAllPurchases); // get purchases by land id
+router.get("/find/:id?", getPurchase); // get purchases by their own id
 
 module.exports = router;
 
