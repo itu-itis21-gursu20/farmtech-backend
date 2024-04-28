@@ -5,7 +5,7 @@ const {
     createLeafAnalysis,
     deleteLeafAnalysis,
     updateLeafAnalysis,
-} = require("../controllers/LeafAnalysis.js");
+} = require("../controllers/leafAnalysis.js");
 
 const router = express.Router();
 
