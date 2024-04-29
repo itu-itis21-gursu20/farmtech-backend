@@ -3,10 +3,8 @@ const Purchase = require("../models/Purchase.js");
 const getAllPurchases = async (req, res) => {  // get purchases by land id
   try {
     const landId =  req?.params.landId;
-    console.log(landId);
     if(landId){
       const purchaseResult = await Purchase.find({ land_id: landId }); 
-      console.log(purchaseResult)
       if (purchaseResult.length > 0) {
         res.status(200).json(purchaseResult);
       } else {
