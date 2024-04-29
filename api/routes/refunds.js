@@ -2,6 +2,7 @@ const express = require("express");
 
 const {    
     getRefund,
+    getAllRefunds,
     createRefund,
     deleteRefund,
     updateRefund,
@@ -12,7 +13,8 @@ const router = express.Router();
 router.post("/:landId?", createRefund);
 router.put("/:id", updateRefund);
 router.delete("/:id", deleteRefund);
-router.get("/:landId?", getRefund); // get Refunds by land id
+router.get("/find/:id?", getRefund); // get refunds by their own id
+router.get("/:landId?", getAllRefunds); // get Refunds by land id
 
 module.exports = router;
 
