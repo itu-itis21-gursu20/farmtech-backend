@@ -1,21 +1,41 @@
 const SoilAnalysis = require("../models/SoilAnalysis.js");
 
-const getSoilAnalysis = async (req, res) => {
+const getAllSoilAnalyses = async (req, res) => {  // get soil analysis by land id
   try {
-    const number =  req?.params.number;
-    console.log("number",number);
-    if(number){
-      const soilAnalysis = await SoilAnalysis.find({numList: number}); // gets all SoilAnalysiss which have entered phoneNumber in its numList
-      console.log(soilAnalysis);
-      if (soilAnalysis.length > 0) {
-        res.status(200).json(soilAnalysis);
+    const landId =  req?.params.landId;
+    if(landId){
+      const analysisResult = await SoilAnalysis.find({ land_id: landId }); 
+      if (analysisResult.length > 0) {
+        res.status(200).json(analysisResult);
       } else {
-        res.status(500).json({message: "No SoilAnalysis found with the given phone number."});
+        res.status(500).json({message: "No soil analysis found with the given land id."});
       }
+    } else {
+      res.status(500).json({message: "Enter land id"});
     }
-  } catch (error) {
-    console.error('Error finding SoilAnalysis:', error);
-    return null;
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+const getSoilAnalysis = async (req, res) => {   // get soil analysis by own id
+  try {
+    let result;
+    const analysisId = req.params.id;
+    if (analysisId) { // analysisId varsa döndürür
+      result = await SoilAnalysis.findById(analysisId);
+    } else { // yoksa tüm soil analizlerini döndürür
+      result = await SoilAnalysis.find({});
+    }
+
+    if (result) {
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ message: 'Soil analysis not found.' });
+    }
+    
+  } catch (err) {
+    res.status(500).json(err);
   }
 };
 
@@ -82,6 +102,7 @@ const updateSoilAnalysis = async (req, res) => { // girilen idye göre güncelle
 
 
 module.exports = {
+    getAllSoilAnalyses,
     getSoilAnalysis,
     createSoilAnalysis,
     deleteSoilAnalysis,
