@@ -1,23 +1,45 @@
 const LeafAnalysis = require("../models/LeafAnalysis.js");
 
-const getLeafAnalysis = async (req, res) => {
+const getAllLeafAnalyses = async (req, res) => {  // get leaf analysis by land id
   try {
-    const number =  req?.params.number;
-    console.log("number",number);
-    if(number){
-      const leafAnalysis = await LeafAnalysis.find({numList: number}); // gets all LeafAnalysiss which have entered phoneNumber in its numList
-      console.log(leafAnalysis);
-      if (leafAnalysis.length > 0) {
-        res.status(200).json(leafAnalysis);
+    const landId =  req?.params.landId;
+    if(landId){
+      const analysisResult = await LeafAnalysis.find({ land_id: landId }); 
+      if (analysisResult.length > 0) {
+        res.status(200).json(analysisResult);
       } else {
-        res.status(500).json({message: "No LeafAnalysis found with the given phone number."});
+        res.status(500).json({message: "No leaf analysis found with the given land id."});
       }
+    } else {
+      res.status(500).json({message: "Enter land id"});
     }
-  } catch (error) {
-    console.error('Error finding LeafAnalysis:', error);
-    return null;
+  } catch (err) {
+    res.status(500).json(err);
   }
 };
+
+
+const getLeafAnalysis = async (req, res) => {   // get leaf analysis by own id
+  try {
+    let result;
+    const analysisId = req.params.id;
+    if (analysisId) { // analysisId varsa döndürür
+      result = await LeafAnalysis.findById(analysisId);
+    } else { // yoksa tüm yaprak analizlerini döndürür
+      result = await LeafAnalysis.find({});
+    }
+
+    if (result) {
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ message: 'Leaf analysis not found.' });
+    }
+    
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 
 const createLeafAnalysis = async (req, res) => {
   try {
@@ -82,6 +104,7 @@ const updateLeafAnalysis = async (req, res) => { // girilen idye göre güncelle
 
 
 module.exports = {
+    getAllLeafAnalyses,
     getLeafAnalysis,
     createLeafAnalysis,
     deleteLeafAnalysis,
