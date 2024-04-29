@@ -11,7 +11,7 @@ const analysisItemSchema = new Schema({
 
 // Yaprak Analizi için ana şema
 const leafAnalysisSchema = new Schema({
-    land_id: { type: Schema.Types.ObjectId, ref: 'SharedLand', required: true },
+    land_id: { type: Schema.Types.ObjectId, ref: 'SharedLand'},
     analysisItems: [analysisItemSchema],
     dateCreated: { type: Date, default: Date.now },
     successRate: { type: Number, required: true }

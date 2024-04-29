@@ -11,7 +11,7 @@ const refundItemSchema = new Schema({
 
 // Create a schema for the refund
 const refundSchema = new Schema({
-    land_id: { type: Schema.Types.ObjectId, ref: 'Land', required: true },
+    land_id: { type: Schema.Types.ObjectId, ref: 'Land' },
     approved: { type: Boolean, default: false },
     dateCreated: { type: Date, default: Date.now },
     description: { type: String, default: '' },

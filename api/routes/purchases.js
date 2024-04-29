@@ -13,8 +13,8 @@ const router = express.Router();
 router.post("/:landId?", createPurchase);
 router.put("/:id", updatePurchase);
 router.delete("/:id", deletePurchase);
-router.get("/:landId?", getAllPurchases); // get purchases by land id
 router.get("/find/:id?", getPurchase); // get purchases by their own id
+router.get("/:landId?", getAllPurchases); // get purchases by land id
 
 module.exports = router;
 

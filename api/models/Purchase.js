@@ -11,7 +11,7 @@ const purchaseItemSchema = new Schema({
 
 // Create a schema for the Purchase
 const PurchaseSchema = new Schema({
-    land_id: { type: Schema.Types.ObjectId, ref: 'SharedLand', required: true },
+    land_id: { type: Schema.Types.ObjectId, ref: 'SharedLand' },
     approved: { type: Boolean, default: false },
     dateCreated: { type: Date, default: Date.now },
     description: { type: String, default: '' },
