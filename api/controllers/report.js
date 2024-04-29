@@ -1,20 +1,41 @@
 const Report = require("../models/Report.js");
 
-const getReport = async (req, res) => {
+const getAllReports = async (req, res) => {  // get reports by land id
   try {
     const landId =  req?.params.landId;
     if(landId){
-      const report = await Report.find({ land_id: landId }); // gets all Reports which have entered phoneNumber in its numList
-      console.log(report);
-      if (report.length > 0) {
-        res.status(200).json(report);
+      const reportResult = await Report.find({ land_id: landId }); 
+      if (reportResult.length > 0) {
+        res.status(200).json(reportResult);
       } else {
         res.status(500).json({message: "No report found with the given land id."});
       }
+    } else {
+      res.status(500).json({message: "Enter land id"});
     }
-  } catch (error) {
-    console.error('Error finding report:', error);
-    return null;
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+const getReport = async (req, res) => {   // get report by own id
+  try {
+    let result;
+    const reportId = req.params.id;
+    if (reportId) { // reportId varsa döndürür
+      result = await Report.findById(reportId);
+    } else { // yoksa tüm reports döndürür
+      result = await Report.find({});
+    }
+
+    if (result) {
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ message: 'Report not found.' });
+    }
+    
+  } catch (err) {
+    res.status(500).json(err);
   }
 };
 
@@ -82,6 +103,7 @@ const updateReport = async (req, res) => { // girilen idye göre günceller
 
 module.exports = {
     getReport,
+    getAllReports,
     createReport,
     deleteReport,
     updateReport,
