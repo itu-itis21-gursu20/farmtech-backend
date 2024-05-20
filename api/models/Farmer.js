@@ -7,7 +7,7 @@ const FarmerSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        required: true,
+        required: false, // TODO: false olucak
     },
     phoneNumber: {
         type: String,

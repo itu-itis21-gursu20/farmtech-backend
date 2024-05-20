@@ -7,7 +7,7 @@ const EngineerSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        required: true,
+        required: false, // TODO: false
     },
     phoneNumber: {
         type: String,

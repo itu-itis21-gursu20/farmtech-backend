@@ -16,6 +16,9 @@ const SharedLandSchema = new mongoose.Schema({
 
     title: { type: String, required: true },
 
+    // TODO: mapUrl ekle
+    mapUrl: { type: String },
+    
     numList: [{ type: String }]
 
   }, {
