@@ -28,15 +28,15 @@ const connect = () => {
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/farmers", farmerRoute);
-app.use("/api/engineers", engineerRoute);
-app.use("/api/sharedLands", sharedLandRoute);
-app.use("/api/purchases", purchaseRoute);
-app.use("/api/reports", reportRoute);
-app.use("/api/refunds", refundRoute);
-app.use("/api/endYearReports", endYearReportRoute);
-app.use("/api/soilAnalyses", soilAnalysisRoute);
-app.use("/api/leafAnalyses", leafAnalysisRoute);
+app.use("/farmers", farmerRoute);
+app.use("/engineers", engineerRoute);
+app.use("/sharedLands", sharedLandRoute);
+app.use("/purchases", purchaseRoute);
+app.use("/reports", reportRoute);
+app.use("/refunds", refundRoute);
+app.use("/endYearReports", endYearReportRoute);
+app.use("/soilAnalyses", soilAnalysisRoute);
+app.use("/leafAnalyses", leafAnalysisRoute);
 
 
 app.listen(process.env.PORT, () => {
