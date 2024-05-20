@@ -42,7 +42,7 @@ const getPurchase = async (req, res) => {   // get purchase by own id
 
 const createPurchase = async (req, res) => {
   try {
-    const newPurchase = new Purchase({ land_id: req.params.landId, ...req.body });
+    const newPurchase = new Purchase({ land_id: req.params.landId, ...req.body, time: new Date().toLocaleDateString('en-GB').replace(/\//g, '/') });
     const savedPurchase = await newPurchase.save();
 
     res.status(201).json({

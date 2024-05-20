@@ -13,7 +13,7 @@ const router = express.Router();
 router.post("/:landId?", createLeafAnalysis);
 router.put("/:id", updateLeafAnalysis);
 router.delete("/:id", deleteLeafAnalysis);
-router.get("/find/:id?", getLeafAnalysis); // get LeafAnalysis by land id
+router.get("/find/:id?", getLeafAnalysis); // get single LeafAnalysis by their own id
 router.get("/:landId?", getAllLeafAnalyses); // get LeafAnalysis by land id
 
 module.exports = router;

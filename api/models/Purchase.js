@@ -15,7 +15,7 @@ const PurchaseSchema = new Schema({
     approved: { type: Boolean, default: false },
     dateCreated: { type: Date, default: Date.now },
     description: { type: String, default: '' },
-    time: { type: String, required: true },
+    time: { type: String },
     purchaseItems: [purchaseItemSchema]
 });
 
